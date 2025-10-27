@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Remède - Baume Naturel de Bien-être</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #faf8f3;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d8659;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #2d8659;
+        }
+
+        /* Menu Burger */
+        .menu-burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-burger span {
+            width: 25px;
+            height: 3px;
+            background-color: #2c3e50;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Menu Mobile */
+        .nav-menu {
+            display: none;
+        }
+
+        .nav-menu.active {
+            display: flex;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            background: white;
+            padding: 2rem;
+            gap: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-menu.active li a {
+            display: block;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .nav-menu.active li:last-child a {
+            border-bottom: none;
+        }
+
+        .cta-button {
+            background: #7ede8f;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(126, 222, 143, 0.3);
+            background: #6bc97f;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            background: #faf8f3;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: #7ede8f;
+            border-radius: 45% 55% 52% 48% / 48% 45% 55% 52%;
+            opacity: 0.1;
+            animation: blob 7s infinite;
+        }
+
+        @keyframes blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, -50px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(50px, 50px) scale(1.05); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .hero-text h1 span {
+            color: #2d8659;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Caractéristiques */
+        .features {
+            background: #faf8f3;
+            padding: 5rem 2rem;
+        }
+
+        .features .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #2d8659;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-weight: 500;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px 40% 35% 40% / 40% 30% 40% 35%;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #7ede8f;
+            box-shadow: 0 5px 20px rgba(45, 134, 89, 0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(45, 134, 89, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Produit en détail */
+        .product-detail {
+            background: white;
+            padding: 5rem 2rem;
+        }
+
+        .product-detail .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .product-images {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .product-images img {
+            width: 100%;
+            height: auto;
+            border-radius: 35% 65% 40% 60% / 60% 35% 65% 40%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .product-info p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .ingredients {
+            background: #faf8f3;
+            padding: 1.5rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            border-left: 4px solid #7ede8f;
+        }
+
+        .ingredients h4 {
+            color: #2d8659;
+            margin-bottom: 1rem;
+        }
+
+        .ingredients ul {
+            list-style: none;
+            columns: 2;
+        }
+
+        .ingredients li {
+            color: #666;
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .ingredients li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7ede8f;
+            font-weight: bold;
+        }
+
+        /* Comment l'utiliser */
+        .how-to-use {
+            background: #faf8f3;
+            padding: 5rem 2rem;
+        }
+
+        .how-to-use .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: #7ede8f;
+            color: white;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(126, 222, 143, 0.3);
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .step p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Avis clients */
+        .testimonials {
+            background: white;
+            padding: 5rem 2rem;
+        }
+
+        .testimonials .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: #faf8f3;
+            padding: 2rem;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            border: 2px solid #e8e6e1;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #2d8659;
+        }
+
+        /* FAQ */
+        .faq {
+            background: #faf8f3;
+            padding: 5rem 2rem;
+        }
+
+        .faq .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e8e6e1;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-item h4 {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item h4:hover {
+            color: #2d8659;
+        }
+
+        .faq-item p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: #7ede8f;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50% 40% 60% 40% / 40% 50% 40% 60%;
+            animation: blob 8s infinite;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: 5%;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+            animation: blob 6s infinite reverse;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .cta-button {
+            background: white;
+            color: #7ede8f;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .cta-button:hover {
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            padding: 3rem 2rem 1.5rem;
+            text-align: center;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #7ede8f;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 2rem;
+            color: #888;
+        }
+
+        /* Responsive Tablet */
+        @media (max-width: 768px) {
+            nav .container {
+                padding: 0 1.5rem;
+            }
+
+            nav .logo {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem;
+                margin-top: 70px;
+            }
+
+            .hero-content, .product-detail .container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+                line-height: 1.3;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .features {
+                padding: 3rem 1.5rem;
+            }
+
+            .features-grid {
+                gap: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+
+            .product-detail {
+                padding: 3rem 1.5rem;
+            }
+
+            .product-images {
+                grid-template-columns: 1fr;
+            }
+
+            .product-info h2 {
+                font-size: 2rem;
+            }
+
+            .how-to-use {
+                padding: 3rem 1.5rem;
+            }
+
+            .steps-grid {
+                gap: 2rem;
+            }
+
+            .ingredients ul {
+                columns: 1;
+            }
+
+            .testimonials {
+                padding: 3rem 1.5rem;
+            }
+
+            .testimonials-grid {
+                gap: 1.5rem;
+            }
+
+            .faq {
+                padding: 3rem 1.5rem;
+            }
+
+            .cta-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-button {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            footer {
+                padding: 2rem 1.5rem 1rem;
+            }
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem 0;
+            }
+
+            nav .container {
+                padding: 0 1rem;
+            }
+
+            nav .logo {
+                font-size: 1.3rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            nav .cta-button {
+                display: none;
+            }
+
+            .menu-burger {
+                display: flex;
+            }
+
+            .hero {
+                padding: 2.5rem 1rem;
+                margin-top: 65px;
+            }
+
+            .hero::before {
+                width: 300px;
+                height: 300px;
+                top: -30px;
+                right: -50px;
+            }
+
+            .hero-content {
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 1.8rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+
+            .hero-text p {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .features {
+                padding: 2.5rem 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .feature-card {
+                padding: 1.2rem;
+                border-radius: 25px;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+
+            .product-detail {
+                padding: 2.5rem 1rem;
+            }
+
+            .product-detail .container {
+                gap: 2rem;
+            }
+
+            .product-images {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .product-images img {
+                border-radius: 25px;
+            }
+
+            .product-info h2 {
+                font-size: 1.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .product-info p {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+
+            .ingredients {
+                padding: 1.2rem;
+                margin: 1.5rem 0;
+            }
+
+            .ingredients h4 {
+                font-size: 1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .ingredients li {
+                font-size: 0.9rem;
+                margin-bottom: 0.6rem;
+                padding-left: 1.2rem;
+            }
+
+            .how-to-use {
+                padding: 2.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 2rem;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .step-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .step h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .step p {
+                font-size: 0.9rem;
+            }
+
+            .testimonials {
+                padding: 2.5rem 1rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+                margin-top: 2rem;
+            }
+
+            .testimonial {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .testimonial p {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .stars {
+                font-size: 1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .faq {
+                padding: 2.5rem 1rem;
+            }
+
+            .faq .container {
+                max-width: 100%;
+            }
+
+            .faq-item {
+                margin-bottom: 1.2rem;
+                padding-bottom: 1.2rem;
+            }
+
+            .faq-item h4 {
+                font-size: 1rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .faq-item p {
+                font-size: 0.9rem;
+            }
+
+            .cta-section {
+                padding: 2.5rem 1rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.6rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .cta-section p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            footer {
+                padding: 1.5rem 1rem 1rem;
+            }
+
+            .footer-links {
+                gap: 1rem;
+                flex-direction: column;
+            }
+
+            .footer-links a {
+                font-size: 0.9rem;
+            }
+
+            .footer-bottom {
+                padding-top: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Hello Remède</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#produit">Produit</a></li>
+                <li><a href="#ingredients">Ingrédients</a></li>
+                <li><a href="#utilisation">Comment l'utiliser</a></li>
+                <li><a href="#avis">Avis</a></li>
+                <li><a href="#contact" class="cta-button" style="display: block; text-align: center;">Commander</a></li>
+            </ul>
+            <div class="menu-burger" id="menuBurger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="#contact" class="cta-button">Commander</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Soulage tes tensions <span>naturellement</span></h1>
+                <p>Découvre le baume de bien-être formulé par une ostéopathe. 100% naturel, sans chimie, sans conservateurs. À glisser partout avec toi.</p>
+                <a href="#contact" class="cta-button">Découvrir le produit</a>
+            </div>
+            <div class="hero-image">
+                <img src="packshot-6180.webp" alt="Hello Remède Baume">
+            </div>
+        </div>
+    </section>
+
+    <!-- Caractéristiques -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Pourquoi choisir Hello Remède ?</h2>
+            <p class="section-subtitle">Une alternative clean & efficace</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48"><path d="M6 17c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2z"/><path d="M9 11c-1.5 0-3 1.5-3 3s1.5 3 3 3 3-1.5 3-3-1.5-3-3-3z"/><path d="M12 5c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z"/><path d="M12 5v12"/></svg></div>
+                    <h3>100% Naturel</h3>
+                    <p>Formulé sans camphre synthétique, sans pétrochimie. Juste la puissance de la nature.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2d8659" width="48" height="48"><circle cx="12" cy="12" r="10"/><path d="M6 12h3v6H6z" fill="#fff"/><path d="M9 12h3v6H9z" fill="#EF4135"/><path d="M12 12h3v6h-3z" fill="#002395"/></svg></div>
+                    <h3>Fabriqué en France</h3>
+                    <p>Conçu et produit en France par une ostéopathe passionnée par le bien-être.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2d8659" width="48" height="48"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1"/><circle cx="18" cy="12" r="1"/><circle cx="12" cy="6" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="8" cy="8" r="0.8"/><circle cx="16" cy="8" r="0.8"/><circle cx="8" cy="16" r="0.8"/><circle cx="16" cy="16" r="0.8"/></svg></div>
+                    <h3>Efficace & Doux</h3>
+                    <p>Une texture et une odeur incroyablement douce qui pénètre facilement la peau.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2d8659" width="48" height="48"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                    <h3>Pour Tous</h3>
+                    <p>Végan, sans test sur les animaux. Respectueux de ton corps et de la planète.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2d8659" stroke-width="2" width="48" height="48"><path d="M6 9l.75-3h10.5l.75 3M6 9v8c0 1 .5 2 1.5 2h9c1 0 1.5-1 1.5-2V9M9 9V6c0-1 .5-1.5 1.5-1.5h3c1 0 1.5.5 1.5 1.5v3"/><circle cx="12" cy="15" r="1.5" fill="#2d8659"/></svg></div>
+                    <h3>Pratique au Quotidien</h3>
+                    <p>Parfait à glisser dans ton sac, ton tiroir ou ta routine. Sport, travail, maison.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2d8659" width="48" height="48"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                    <h3>Résultats Rapides</h3>
+                    <p>Soulagement des douleurs et tensions en quelques heures seulement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produit en détail -->
+    <section class="product-detail" id="produit">
+        <div class="container">
+            <div class="product-images">
+                <img src="packshot-6257.webp" alt="Baume Hello Remède">
+                <img src="packshot-6271.webp" alt="Baume Hello Remède détail">
+                <img src="helloremede-baume-naturelle-massage.webp" alt="Baume Hello Remède packaging">
+                <img src="hello-remede-baume-de-soin-naturel-packaging_11.webp" alt="Baume Hello Remède présentation">
+            </div>
+            <div class="product-info">
+                <h2>Le Baume Bien-être</h2>
+                <p>Formulé avec passion par une ostéopathe, ce baume est conçu pour accompagner ton quotidien. Que ce soit après le sport, au travail, en déplacement ou à la maison, Hello Remède est là pour soulager tes tensions avec douceur et simplicité.</p>
+                
+                <div class="ingredients" id="ingredients">
+                    <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2d8659" stroke-width="2" width="20" height="20" style="display: inline; margin-right: 8px; vertical-align: middle;"><path d="M6 17c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2z"/><path d="M9 11c-1.5 0-3 1.5-3 3s1.5 3 3 3 3-1.5 3-3-1.5-3-3-3z"/><path d="M12 5c-2 0-4 2-4 4s2 4 4 4 4-2 4-4-2-4-4-4z"/><path d="M12 5v12"/></svg> Ingrédients naturels puissants</h4>
+                    <ul>
+                        <li>Arnica</li>
+                        <li>Menthe poivrée</li>
+                        <li>Pin maritime</li>
+                        <li>Hélichryse italienne</li>
+                        <li>Huiles essentielles</li>
+                        <li>Cires naturelles</li>
+                    </ul>
+                </div>
+
+                <p><strong>Composition 100% d'origine naturelle</strong></p>
+                <p>Stimule ta circulation, fait du bien à ton corps et à tes muscles grâce aux actifs naturels puissants à l'intérieur.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment l'utiliser -->
+    <section class="how-to-use" id="utilisation">
+        <div class="container">
+            <h2 class="section-title">Comment l'utiliser ?</h2>
+            <p class="section-subtitle">En 3 étapes simples</p>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Prélève une noisette</h3>
+                    <p>Fais fondre une petite quantité de baume dans le creux de la main.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Masse doucement</h3>
+                    <p>Applique sur la zone souhaitée en effectuant des mouvements lents et enveloppants.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Profite</h3>
+                    <p>Laisse le baume faire son effet et remercie-toi pour ce moment que tu t'accordes.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 3rem; color: #666;">À renouveler plusieurs fois par jour si besoin</p>
+        </div>
+    </section>
+
+    <!-- Avis clients -->
+    <section class="testimonials" id="avis">
+        <div class="container">
+            <h2 class="section-title">Ce qu'ils en pensent</h2>
+            <p class="section-subtitle">Les avis de nos clients heureux</p>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 24" width="120" height="24" style="display: inline;"><polygon points="12,2 15,10 23,10 17,15 20,23 12,18 4,23 7,15 1,10 9,10" fill="#ffc107"/><polygon points="36,2 39,10 47,10 41,15 44,23 36,18 28,23 31,15 25,10 33,10" fill="#ffc107"/><polygon points="60,2 63,10 71,10 65,15 68,23 60,18 52,23 55,15 49,10 57,10" fill="#ffc107"/><polygon points="84,2 87,10 95,10 89,15 92,23 84,18 76,23 79,15 73,10 81,10" fill="#ffc107"/><polygon points="108,2 111,10 119,10 113,15 116,23 108,18 100,23 103,15 97,10 105,10" fill="#ffc107"/></svg></div>
+                    <p>"On adore l'odeur dans la famille. Très agréable et facile à appliquer. Et surtout, les résultats sont là ! Une diminution importante des douleurs quelques heures seulement après l'application."</p>
+                    <p class="testimonial-author">— Client satisfait</p>
+                </div>
+                <div class="testimonial">
+                    <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 24" width="120" height="24" style="display: inline;"><polygon points="12,2 15,10 23,10 17,15 20,23 12,18 4,23 7,15 1,10 9,10" fill="#ffc107"/><polygon points="36,2 39,10 47,10 41,15 44,23 36,18 28,23 31,15 25,10 33,10" fill="#ffc107"/><polygon points="60,2 63,10 71,10 65,15 68,23 60,18 52,23 55,15 49,10 57,10" fill="#ffc107"/><polygon points="84,2 87,10 95,10 89,15 92,23 84,18 76,23 79,15 73,10 81,10" fill="#ffc107"/><polygon points="108,2 111,10 119,10 113,15 116,23 108,18 100,23 103,15 97,10 105,10" fill="#ffc107"/></svg></div>
+                    <p>"J'utilise le baume pour une douleur chronique à la cheville, il me soulage beaucoup. L'odeur est incroyable, la texture aussi, il pénètre facilement et ne laisse pas la peau grasse."</p>
+                    <p class="testimonial-author">— Un adepte du baume</p>
+                </div>
+                <div class="testimonial">
+                    <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 24" width="120" height="24" style="display: inline;"><polygon points="12,2 15,10 23,10 17,15 20,23 12,18 4,23 7,15 1,10 9,10" fill="#ffc107"/><polygon points="36,2 39,10 47,10 41,15 44,23 36,18 28,23 31,15 25,10 33,10" fill="#ffc107"/><polygon points="60,2 63,10 71,10 65,15 68,23 60,18 52,23 55,15 49,10 57,10" fill="#ffc107"/><polygon points="84,2 87,10 95,10 89,15 92,23 84,18 76,23 79,15 73,10 81,10" fill="#ffc107"/><polygon points="108,2 111,10 119,10 113,15 116,23 108,18 100,23 103,15 97,10 105,10" fill="#ffc107"/></svg></div>
+                    <p>"Étant ostéopathe moi-même, j'étais très curieuse de tester le baume. Je l'ai testé d'abord sur moi et j'en suis très contente. Il m'a beaucoup soulagée après de longues journées."</p>
+                    <p class="testimonial-author">— Un professionnel</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Questions fréquentes</h2>
+            <div class="faq-item">
+                <h4>Le baume est-il efficace pour les douleurs musculaires ? ➤</h4>
+                <p>Oui ! Notre baume a été formulé avec des huiles essentielles reconnues pour leurs vertus apaisantes et relaxantes (arnica, menthe poivrée, pin maritime, hélichryse italienne). Ces actifs sont traditionnellement utilisés pour soutenir la récupération et favoriser la sensation de détente après un effort.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Comment intégrer le baume dans ma routine ? ➤</h4>
+                <p>Très facilement ! Intégrez-le à vos moments de bien-être. Utilisez-le avant une séance de yoga, de méditation, ou simplement pour vous offrir une parenthèse de calme. Appliquez-le sur vos poignets, votre nuque ou votre thorax tout en respirant profondément.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Comment conserver le baume ? ➤</h4>
+                <p>Conserve ton baume à l'abri de la chaleur et de la lumière directe pour préserver toutes les propriétés des plantes. Sa texture peut légèrement évoluer avec les saisons, c'est normal et c'est le signe d'une formule 100% naturelle. Tu peux le conserver au frigo pour un effet fraîcheur.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Le baume convient-il à tous ? ➤</h4>
+                <p>Notre baume est formulé pour accompagner au quotidien et convient à la plupart des personnes. Cependant, si vous avez une peau sensible ou des allergies, nous vous recommandons de tester d'abord une petite quantité.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Prêt à soulager tes tensions ?</h2>
+            <p>Rejoins les milliers de clients satisfaits qui ont déjà adopté Hello Remède</p>
+            <a href="#contact" class="cta-button">Commander maintenant</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#mentions">Mentions légales</a>
+                <a href="#cgu">Conditions générales</a>
+                <a href="#contact">Contact</a>
+                <a href="#blog">Blog</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hello Remède. Tous les droits réservés. Formulé avec ❤️ en France.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Burger Toggle
+        const menuBurger = document.getElementById('menuBurger');
+        const navMenu = document.getElementById('navMenu');
+
+        menuBurger.addEventListener('click', function() {
+            menuBurger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Fermer le menu quand on clique sur un lien
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                menuBurger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Fermer le menu quand on clique dehors
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = navMenu.contains(event.target) || menuBurger.contains(event.target);
+            if (!isClickInsideNav && navMenu.classList.contains('active')) {
+                menuBurger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
